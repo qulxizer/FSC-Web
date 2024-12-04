@@ -1,22 +1,18 @@
-import { Bell, User, Menu } from "lucide-react";
+import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-interface HeaderProps {
-  toggleSidebar: () => void;
-}
-
-export function Header({ toggleSidebar }: HeaderProps) {
+export function Header() {
   return (
     <header className="flex items-center justify-between border-b bg-white px-4 py-3">
       <div className="flex items-center">
-        <Button
+        {/* <Button
           variant="ghost"
           size="icon"
           onClick={toggleSidebar}
           className="mr-4"
         >
           <Menu className="size-5" />
-        </Button>
+        </Button> */}
         <h1 className="text-xl font-semibold">Farm Management System</h1>
       </div>
       <div className="flex items-center space-x-4">
