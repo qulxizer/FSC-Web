@@ -34,42 +34,52 @@ export function Sidebar({
   setIsOpen,
 }: SidebarProps) {
   return (
-    <div
-      className={`border-r bg-white transition-all duration-300 ${
-        isOpen ? "w-64" : "w-16"
-      }`}
-    >
-      <ScrollArea className="h-screen">
-        <div className="p-4">
-          <div className="mb-4 flex items-center justify-between">
-            {isOpen && <h2 className="text-xl font-bold">Farm Dashboard</h2>}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? (
-                <ChevronLeft className="size-4" />
-              ) : (
-                <ChevronRight className="size-4" />
-              )}
-            </Button>
-          </div>
-          <nav className="space-y-2">
-            {navItems.map((item) => (
+    <>
+      {/* Backdrop for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+
+      <div
+        className={`fixed top-0 left-0 z-50 h-screen bg-white border-r transition-all duration-300 ${
+          isOpen ? "w-64" : "w-16"
+        } md:relative md:z-auto`}
+      >
+        <ScrollArea className="h-full">
+          <div className="p-4">
+            <div className="mb-4 flex items-center justify-between">
+              {isOpen && <h2 className="text-xl font-bold">Farm Dashboard</h2>}
               <Button
-                key={item.name}
                 variant="ghost"
-                className={`w-full justify-start ${isOpen ? "" : "px-2"}`}
-                onClick={() => setActiveComponent(item.name)}
+                size="icon"
+                onClick={() => setIsOpen(!isOpen)}
               >
-                <item.icon className={`size-4 ${isOpen ? "mr-2" : ""}`} />
-                {isOpen && <span>{item.name}</span>}
+                {isOpen ? (
+                  <ChevronLeft className="size-4" />
+                ) : (
+                  <ChevronRight className="size-4" />
+                )}
               </Button>
-            ))}
-          </nav>
-        </div>
-      </ScrollArea>
-    </div>
+            </div>
+            <nav className="space-y-2">
+              {navItems.map((item) => (
+                <Button
+                  key={item.name}
+                  variant="ghost"
+                  className={`w-full justify-start ${isOpen ? "" : "px-2"}`}
+                  onClick={() => setActiveComponent(item.name)}
+                >
+                  <item.icon className={`size-4 ${isOpen ? "mr-2" : ""}`} />
+                  {isOpen && <span>{item.name}</span>}
+                </Button>
+              ))}
+            </nav>
+          </div>
+        </ScrollArea>
+      </div>
+    </>
   );
 }

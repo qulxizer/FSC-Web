@@ -49,7 +49,7 @@ export default function Dashboard() {
         setIsOpen={setIsSidebarOpen}
       />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+        <Header/>
         <main className="flex-1 overflow-y-auto p-4">
           <h2 className="mb-6 text-2xl font-bold">{activeComponent}</h2>
           {renderActiveComponent()}
