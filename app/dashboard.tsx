@@ -1,32 +1,27 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Sidebar } from "./components/sidebar"
-import { Header } from "./components/header"
+import { useState } from 'react'
 import { WeatherCard } from "./components/weather-card"
 import { CropStatus } from "./components/crop-status"
 import { LivestockOverview } from "./components/livestock-overview"
-import { EquipmentStatus } from "./components/equipment-status"
 import { Sensors } from "./components/sensors"
 import { Settings } from "./components/settings"
+import { Sidebar } from "./components/sidebar"
 
 export default function Dashboard() {
-  const [activeComponent, setActiveComponent] = useState("Dashboard")
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [activeComponent, setActiveComponent] = useState('Dashboard')
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
-      case "Weather":
+      case 'Weather':
         return <WeatherCard />
-      case "Crops":
+      case 'Crops':
         return <CropStatus />
-      case "Livestock":
+      case 'Livestock':
         return <LivestockOverview />
-      case "Equipment":
-        return <EquipmentStatus />
-      case "Sensors":
+      case 'Sensors':
         return <Sensors />
-      case "Settings":
+      case 'Settings':
         return <Settings />
       default:
         return (
@@ -34,7 +29,6 @@ export default function Dashboard() {
             <WeatherCard />
             <CropStatus />
             <LivestockOverview />
-            <EquipmentStatus />
             <Sensors />
           </div>
         )
@@ -42,16 +36,16 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar 
-        setActiveComponent={setActiveComponent} 
-        isOpen={isSidebarOpen}
-        setIsOpen={setIsSidebarOpen}
-      />
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <Header toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+    <div className="flex flex-col h-screen">
+      <header className="bg-primary text-primary-foreground h-16 flex items-center px-4">
+        <h1 className="text-2xl font-bold">Farm Dashboard</h1>
+      </header>
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar setActiveComponent={setActiveComponent} isOpen={false} setIsOpen={function (isOpen: boolean): void {
+          throw new Error('Function not implemented.')
+        } } />
         <main className="flex-1 overflow-y-auto p-4">
-          <h2 className="text-2xl font-bold mb-6">{activeComponent}</h2>
+          <h2 className="text-3xl font-bold mb-6">{activeComponent}</h2>
           {renderActiveComponent()}
         </main>
       </div>
