@@ -44,13 +44,14 @@ export function Sidebar({
       )}
 
       <div
-        className={`fixed top-0 left-0 z-50 h-screen bg-white border-r transition-all duration-300 ${
-          isOpen ? "w-64" : "w-16"
-        } md:relative md:z-auto`}
+        className={`fixed top-0 left-0 h-screen bg-white border-r transition-all duration-300 md:relative md:z-0 ${
+          isOpen ? "w-64 z-50" : "w-16 z-0"
+        } ${isOpen ? "absolute" : "relative"} md:relative ${isOpen ? "md:w-64":"md:w-16"}`}
       >
         <ScrollArea className="h-full">
           <div className="p-4">
             <div className="mb-4 flex items-center justify-between">
+              {/* Only show title when expanded */}
               {isOpen && <h2 className="text-xl font-bold">Farm Dashboard</h2>}
               <Button
                 variant="ghost"
