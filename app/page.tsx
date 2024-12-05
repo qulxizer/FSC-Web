@@ -12,7 +12,7 @@ import { Settings } from "./components/settings";
 
 export default function Dashboard() {
   const [activeComponent, setActiveComponent] = useState("Dashboard");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
