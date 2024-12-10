@@ -43,7 +43,7 @@ export function Sidebar({
         ></div>
       )}
       <div
-        className={`fixed top-0 left-0 h-screen border-r transition-all duration-300 md:relative md:z-0
+        className={`fixed top-0 left-0 h-screen bg-background border-r transition-all duration-300 md:relative md:z-0
           ${isOpen ? "w-64 z-50" : "w-16 z-0"}
           ${isOpen ? "absolute" : "relative"} md:relative `}
       >
