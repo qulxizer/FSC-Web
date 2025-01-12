@@ -1,11 +1,32 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { fetchTankLevel } from "@/lib/db";
 
 export function WaterTankLevel() {
-  // Ensure level is between 0 and 100
-  const [level, setLevel] = useState(10);
-  // setLevel(10);
+  const [level, setLevel] = useState(0);
+
+  const refreshInterval = Number(localStorage.getItem("refreshInterval"));
+  if (localStorage.getItem("refreshInterval") !== null) {
+  }
+  console.log(refreshInterval);
+  // Fetch tank level at regular intervals
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      try {
+        const response = await fetchTankLevel(); // Replace with your real API call
+        if (response && response.level !== null) {
+          setLevel(response.level);
+        }
+      } catch (error) {
+        console.error("Error fetching tank level:", error);
+      }
+    }, refreshInterval);
+
+    // Cleanup: Clear the interval when refreshInterval changes or component unmounts
+    return () => clearInterval(intervalId);
+  }, [refreshInterval]); // Re-run the effect if refreshInterval changes
+
   const clampedLevel = Math.min(Math.max(level, 0), level);
 
   return (
@@ -23,8 +44,12 @@ export function WaterTankLevel() {
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <span
-                className="text-4xl font-bold"
-                style={{ color: clampedLevel > 50 ? "black" : "white" }}
+                className={
+                  clampedLevel < 50
+                    ? "text-4xl font-bold text-foreground"
+                    : "text-4xl font-bold text-background"
+                }
+                // style={{ color: clampedLevel > 50 ? "black" : "white" }}
               >
                 {clampedLevel}%
               </span>

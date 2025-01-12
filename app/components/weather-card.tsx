@@ -1,22 +1,28 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Cloud, Sun, Droplets, Wind } from "lucide-react";
+import { Cloud, Sun, Droplets } from "lucide-react";
 import { fetchWeather, IWeather } from "@/lib/db";
 import { useEffect, useState } from "react";
 
 export function WeatherCard() {
   const [weatherData, setWeatherData] = useState<IWeather | null>(null);
+  const refreshInterval = Number(localStorage.getItem("refreshInterval"));
 
-  // Fetch weather data every second
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const data = await fetchWeather();
-      if (data) {
-        setWeatherData(data);
+    const intervalId = setInterval(async () => {
+      try {
+        const response = await fetchWeather(); // Replace with your real API call
+        if (response !== null) {
+          setWeatherData(response);
+        }
+      } catch (error) {
+        console.error("Error fetching tank level:", error);
       }
-    }, 1000);
-    // Cleanup the interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
+    }, refreshInterval);
+
+    // Cleanup: Clear the interval when refreshInterval changes or component unmounts
+    return () => clearInterval(intervalId);
+  }, [refreshInterval]); // Re-run the effect if refreshInterval changes
+
   return (
     <Card>
       <CardHeader>
@@ -27,7 +33,7 @@ export function WeatherCard() {
           <div className="flex items-center">
             <Sun className="mr-2 size-8 text-yellow-500" />
             <span className="text-2xl font-bold">
-              {weatherData ? `${weatherData.tempreture}°F` : "Loading..."}
+              {weatherData ? `${weatherData.tempreture}°C` : "Loading..."}
             </span>
           </div>
           <div>
@@ -44,14 +50,6 @@ export function WeatherCard() {
               <span>
                 {weatherData
                   ? `Humidity: ${weatherData.humidity}%`
-                  : "Loading..."}
-              </span>
-            </div>
-            <div className="flex items-center">
-              <Wind className="mr-1 size-4" />
-              <span>
-                {weatherData
-                  ? `Wind: ${weatherData.windSpeed} mph NE`
                   : "Loading..."}
               </span>
             </div>

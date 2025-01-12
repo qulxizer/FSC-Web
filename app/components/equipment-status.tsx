@@ -1,21 +1,31 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tractor, Wrench, Droplets } from "lucide-react";
+import { Waves, Droplets } from "lucide-react";
 
 const equipment = [
   {
-    name: "Tractor",
+    name: "Soil Moisture - Field 1",
     status: "Operational",
-    icon: Tractor,
+    icon: Waves,
   },
   {
-    name: "Harvester",
-    status: "Maintenance",
-    icon: Wrench,
+    name: "Soil Moisture - Field 2",
+    status: "Operational",
+    icon: Waves,
+  },
+  {
+    name: "Soil Moisture - Field 3",
+    status: "Operational",
+    icon: Waves,
+  },
+  {
+    name: "Soil Moisture - Field 4",
+    status: "Operational",
+    icon: Waves,
   },
   {
     name: "Irrigation System",
-    status: "Operational",
+    status: "Non-operational",
     icon: Droplets,
   },
 ];

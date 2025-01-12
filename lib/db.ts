@@ -1,44 +1,60 @@
-// import PocketBase from 'pocketbase';
+import PocketBase from 'pocketbase';
 
 
 // Change it to the ip address of the db
-// const pb = new PocketBase('http://10.0.128.51:8090');
+const pb = new PocketBase('http://10.0.128.59:8090');
 
-interface IWeather {
+export interface IWeather {
     tempreture: number;
     humidity: number;
-    windSpeed: number;
 }
-import PocketBase, { RecordService } from 'pocketbase'
-
-interface Task {
-    id: string;
-    name: string;
+export interface ITank {
+    level: number;
 }
 
-interface Post {
-    id: string;
-    title: string;
-    active: boolean;
+export async function fetchTankLevel(): Promise<ITank | null> {
+    const tank: ITank = {
+        level:0
+    }
+
+    try {
+        // Fetch the latest record from the 'tank' collection
+        const records = await pb.collection('tank').getList(1, 1, {
+            sort: '-created', // Sort by the 'created' field in descending order
+        });
+
+        const latestItem = records.items[0]; // Get the first item (latest)
+
+        if (latestItem) {
+            // Ensure you access the fields safely
+            const level = latestItem.level || 0; // Default to 0 if not found
+            tank.level = level;
+
+            // You can now use the fields
+            console.log(`Tank Level: ${tank.level}`);
+        } else {
+            console.log('No latest item found');
+        }
+
+        return tank;
+    } catch (error) {
+        console.warn('Error fetching latest item:', error);
+        return null; // Return null if an error occurs
+    }
+
 }
 
-interface TypedPocketBase extends PocketBase {
-    collection(idOrName: string): RecordService // default fallback for any other collection
-    collection(idOrName: 'tasks'): RecordService<Task>
-    collection(idOrName: 'posts'): RecordService<Post>
-}
+export async function fetchWeather(): Promise<IWeather | null> {
 
-const pb = new PocketBase('http://127.0.0.1:8090') as TypedPocketBase;
-async function fetchWeather(): Promise<IWeather | null> {
+    // Creating the interface with default values
     const weather: IWeather = {
         tempreture: 0,
         humidity: 0,
-        windSpeed: 0,
     };
     
     try {
         // Fetch the latest record from the 'weather' collection
-        const records = await pb.collection('').getList(1, 1, {
+        const records = await pb.collection('weather').getList(1, 1, {
             sort: '-created', // Sort by the 'created' field in descending order
         });
 
@@ -52,22 +68,16 @@ async function fetchWeather(): Promise<IWeather | null> {
             const humidity = latestItem.humidity || 0; // Default to 0 if not found
             weather.humidity = humidity;
 
-            const windSpeed = latestItem.windSpeed || 0; // Default to 0 if not found
-            weather.windSpeed = windSpeed;
-
             // You can now use the fields
             console.log(`Temperature: ${temp}`);
             console.log(`Humidity: ${humidity}`);
-            console.log(`Wind Speed: ${windSpeed}`);
         } else {
             console.log('No latest item found');
         }
 
         return weather;
     } catch (error) {
-        console.error('Error fetching latest item:', error);
+        console.warn('Error fetching latest item:', error);
         return null; // Return null if an error occurs
     }
 }
-export { fetchWeather };
-export type { IWeather };
