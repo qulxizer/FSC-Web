@@ -3,8 +3,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Home,
   Cloud,
-  Sprout,
-  MilkIcon as Cow,
   Wrench,
   Droplet,
   Settings,
@@ -15,10 +13,9 @@ import {
 const navItems = [
   { name: "Dashboard", icon: Home },
   { name: "Weather", icon: Cloud },
-  { name: "Crops", icon: Sprout },
-  { name: "Livestock", icon: Cow },
+  { name: "Moisture Sensors", icon: Droplet },
   { name: "Equipment", icon: Wrench },
-  { name: "Sensors", icon: Droplet },
+  { name: "Water Tank", icon: Droplet },
   { name: "Settings", icon: Settings },
 ];
 
@@ -51,7 +48,11 @@ export function Sidebar({
           <div className="p-4">
             <div className="mb-4 flex items-center justify-between">
               {/* Only show title when expanded */}
-              {isOpen && <h2 className="text-xl font-bold text-nowrap">Farm Dashboard</h2>}
+              {isOpen && (
+                <h2 className="text-xl font-bold text-nowrap">
+                  Farm Dashboard
+                </h2>
+              )}
               <Button
                 variant="ghost"
                 size="icon"
