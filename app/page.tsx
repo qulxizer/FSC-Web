@@ -6,10 +6,11 @@ import { Header } from "./components/header";
 import { WeatherCard } from "./components/weather-card";
 import { WaterTankLevel } from "./components/water-tank";
 import { EquipmentStatus } from "./components/equipment-status";
-import { Sensors } from "./components/sensors";
 import { Settings } from "./components/settings";
 import { useEffect } from "react";
 import { MoistureSensors } from "./components/moisture-sensors";
+import { Npk } from "./components/npk";
+import { Valve } from "./components/valve";
 
 export default function Dashboard() {
   const [activeComponent, setActiveComponent] = useState("Dashboard");
@@ -26,22 +27,23 @@ export default function Dashboard() {
         return <WeatherCard />;
       case "Equipment":
         return <EquipmentStatus />;
-      case "Sensors":
-        return <Sensors />;
       case "Settings":
         return <Settings />;
       case "Water Tank":
         return <WaterTankLevel />;
       case "Moisture Sensors":
         return <MoistureSensors />;
+      case "Npk":
+        return <Npk />;
       default:
         return (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <WeatherCard />
             <EquipmentStatus />
-            <Sensors />
             <WaterTankLevel />
             <MoistureSensors />
+            <Npk />
+            <Valve />
           </div>
         );
     }

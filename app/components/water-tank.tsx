@@ -6,10 +6,13 @@ import { fetchTankLevel } from "@/lib/db";
 export function WaterTankLevel() {
   const [level, setLevel] = useState(0);
 
-  const refreshInterval = Number(localStorage.getItem("refreshInterval"));
-  if (localStorage.getItem("refreshInterval") !== null) {
-  }
-  console.log(refreshInterval);
+  const [refreshInterval, setRefreshInterval] = useState(1000); // Default to 1 seconds
+
+  useEffect(() => {
+    // Access localStorage only in the browser
+    const interval = Number(localStorage.getItem("refreshInterval"));
+    if (!isNaN(interval)) setRefreshInterval(interval);
+  }, []);
   // Fetch tank level at regular intervals
   useEffect(() => {
     const intervalId = setInterval(async () => {

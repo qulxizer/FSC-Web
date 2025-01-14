@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 
 export function WeatherCard() {
   const [weatherData, setWeatherData] = useState<IWeather | null>(null);
-  const refreshInterval = Number(localStorage.getItem("refreshInterval"));
+  const [refreshInterval, setRefreshInterval] = useState(1000); // Default to 1 seconds
+
+  useEffect(() => {
+    // Access localStorage only in the browser
+    const interval = Number(localStorage.getItem("refreshInterval"));
+    if (!isNaN(interval)) setRefreshInterval(interval);
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {

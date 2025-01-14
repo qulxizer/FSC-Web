@@ -8,6 +8,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Antenna,
 } from "lucide-react";
 
 const navItems = [
@@ -15,6 +16,7 @@ const navItems = [
   { name: "Weather", icon: Cloud },
   { name: "Moisture Sensors", icon: Droplet },
   { name: "Equipment", icon: Wrench },
+  { name: "Npk", icon: Antenna },
   { name: "Water Tank", icon: Droplet },
   { name: "Settings", icon: Settings },
 ];
