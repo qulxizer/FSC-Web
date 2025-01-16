@@ -12,8 +12,10 @@ export function Valve() {
     const fetchStatus = async () => {
       setLoading(true);
       const status = await getLatestValveStatus();
-      setValveStatus(status);
-      setLoading(false);
+      if (status) {
+        setValveStatus(status.state);
+        setLoading(false);
+      }
     };
 
     fetchStatus();
@@ -24,8 +26,8 @@ export function Valve() {
     setLoading(true);
     const newState = !valveStatus;
     const result = await postValveStatus(newState);
-    if (result !== null) {
-      setValveStatus(result);
+    if (result) {
+      setValveStatus(result.state);
     }
     setLoading(false);
   };
