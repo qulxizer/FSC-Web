@@ -11,11 +11,10 @@ export interface ITank {
   level: number;
 }
 
-export type IMoistureSensors = IMoistureSensor[];
-
 export interface IMoistureSensor {
   name: string;
   value: number;
+  id: number;
 }
 
 export interface INpk {
@@ -32,9 +31,13 @@ export async function postValveStatus(state: boolean): Promise<IValve | null> {
   const data = {
     state: state,
   };
+  const valve: IValve = {
+    state: false,
+  };
   try {
     const record = await pb.collection("valve").create(data);
-    return record.state;
+    valve.state = record.state;
+    return valve;
   } catch (error) {
     console.warn("Error posting valve status:", error);
     return null; // Return null if an error occurs
@@ -63,27 +66,32 @@ export async function getLatestValveStatus(): Promise<IValve | null> {
   return null;
 }
 
-export async function fetchMoisture(): Promise<IMoistureSensors | null> {
-  const moisture: IMoistureSensors = [];
+export async function fetchMoistureSensor(
+  id: number
+): Promise<IMoistureSensor | null> {
+  const moisture: IMoistureSensor = {
+    name: "",
+    value: 0,
+    id: id,
+  };
 
   try {
     // Fetch the latest record from the 'weather' collection
     const records = await pb.collection("moisture").getList(1, 1, {
       sort: "-created", // Sort by the 'created' field in descending order
+      filter: `sensor_id="${id}"`,
     });
 
     const latestItem = records.items[0]; // Get the first item (latest)
     if (latestItem) {
-      const sensors = latestItem.sensors;
-      sensors.forEach((sensor: { name: string; value: number }) => {
-        const sensorData: IMoistureSensor = {
-          name: sensor.name,
-          value: sensor.value,
-        };
-        moisture.push(sensorData);
-      });
+      const value = latestItem.value || 0; // Default to 0 if not found
+      moisture.value = value;
+
+      const name = latestItem.name || 0; // Default to 0 if not found
+      moisture.name = name;
     } else {
       console.log("No latest item found");
+      return null;
     }
 
     return moisture;
