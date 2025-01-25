@@ -56,6 +56,7 @@ export function EquipmentStatus() {
 
         if (sensor.type === EquipmentType.SoilMoisture) {
           const moistureSensor = await fetchMoistureSensor(sensor.id);
+          console.log(moistureSensor);
           sensor.status =
             !moistureSensor?.value || moistureSensor.value < 1
               ? "Non-operational"

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "./pocketbase serve & next dev",
+    "dev": "next dev",
     "build": "next build",
-    "start": "./pocketbase serve & next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
