@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sidebar } from "./components/sidebar";
 import { Header } from "./components/header";
 import { WeatherCard } from "./components/weather-card";
 import { WaterTankLevel } from "./components/water-tank";
 import { EquipmentStatus } from "./components/equipment-status";
 import { Settings } from "./components/settings";
-import { useEffect } from "react";
 import { MoistureSensors } from "./components/moisture-sensors";
 import { Npk } from "./components/npk";
 import { Valve } from "./components/valve";
@@ -15,9 +14,13 @@ import { Valve } from "./components/valve";
 export default function Dashboard() {
   const [activeComponent, setActiveComponent] = useState("Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   useEffect(() => {
-    if (localStorage.getItem("refreshInterval") === null) {
-      localStorage.setItem("refreshInterval", "1000");
+    if (typeof window !== "undefined") {
+      // Ensure localStorage is available
+      if (localStorage.getItem("refreshInterval") === null) {
+        localStorage.setItem("refreshInterval", "1000");
+      }
     }
   }, []);
 
