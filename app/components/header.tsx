@@ -5,14 +5,6 @@ export function Header() {
   return (
     <header className="flex items-center justify-between border-b px-4 py-3">
       <div className="flex items-center">
-        {/* <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleSidebar}
-          className="mr-4"
-        >
-          <Menu className="size-5" />
-        </Button> */}
         <h1 className="text-xl font-semibold">Farm Management System</h1>
       </div>
       <div className="flex items-center space-x-4">

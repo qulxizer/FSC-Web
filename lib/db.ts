@@ -1,7 +1,7 @@
 import PocketBase from "pocketbase";
 
 // Change it to the ip address of the db
-const pb = new PocketBase("http://10.0.128.49:8090");
+const pb = new PocketBase("http://127.0.0.1:8090");
 
 export interface IWeather {
   tempreture: number;
