@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Cloud, Sun, Droplets } from "lucide-react";
+import { Sun, Droplets } from "lucide-react";
 import { fetchWeather, IWeather } from "@/lib/db";
 import { useEffect, useState } from "react";
 
@@ -43,14 +43,6 @@ export function WeatherCard() {
             </span>
           </div>
           <div>
-            <div className="flex items-center">
-              <Cloud className="mr-1 size-4" />
-              <span>
-                {weatherData
-                  ? `${weatherData.humidity}% chance of rain`
-                  : "Loading..."}
-              </span>
-            </div>
             <div className="flex items-center">
               <Droplets className="mr-1 size-4" />
               <span>
